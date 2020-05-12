@@ -9,6 +9,10 @@ export default class AdditionalFunctions {
     document.execCommand('copy');
 
     this.createInfoForm('Текст скопирован в буффер обмена!', 'green');
+    // Этот кошмар нужен для того, чтобы убрать выделение
+    const fastCopy = this.textArea.value;
+    this.textArea.value = '';
+    this.textArea.value = fastCopy;
   }
 
   cleanForm() { // Очистить
