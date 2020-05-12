@@ -1,10 +1,12 @@
-import { letters, symbolArr } from './dataBase';
+import { letters, symbolArr, numberArr } from './dataBase';
 import Decryping from './decryping';
 
 export default class Translate {
   constructor() {
     this.translateToBtn = document.querySelector('[data-id=translateToBtn]');
     this.translateFromBtn = document.querySelector('[data-id=translateFromBtn]');
+    this.cleanFormBtn = document.querySelector('[data-id=cleanForm]');
+    this.copyTextBtn = document.querySelector('[data-id=copyText]');
     this.textArea = null;
   }
 
@@ -34,6 +36,22 @@ export default class Translate {
         new Decryping(this.textArea).create();
       }
     });
+
+    this.cleanFormBtn.addEventListener('click', () => { // Очистить
+      this.textArea = document.querySelector('[data-id=textField]');
+      this.textArea.value = '';
+    });
+
+    this.copyTextBtn.addEventListener('click', () => { // Копировать
+      /* Get the text field */
+      const copyText = document.querySelector('[data-id=textField]');
+
+      copyText.select();
+      document.execCommand('copy');
+
+      alert('Текст скопирован');
+    });
+
 
     console.log('Кнопки готовы к действию');
   }
@@ -73,8 +91,14 @@ export default class Translate {
           newText += `${symbolArr[j][1]}${this.specialSimbol()}`;
         }
       }
+
+      for (let j = 0; j < numberArr.length; j += 1) { // если цифры
+        if (el === numberArr[j][0]) {
+          newText += `${numberArr[j][1]}${this.specialSimbol()}`;
+        }
+      }
     }
 
-    this.textArea.value += `\n- - - - - Результат - - - - -\n${newText}`;
+    this.textArea.value = newText;
   }
 }

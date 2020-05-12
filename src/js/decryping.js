@@ -1,4 +1,4 @@
-import { letters, symbolArr } from './dataBase';
+import { letters, symbolArr, numberArr } from './dataBase';
 
 export default class Decryping {
   constructor(textArea) {
@@ -29,8 +29,14 @@ export default class Decryping {
           newText += `${symbolArr[j][0]}`;
         }
       }
+
+      for (let j = 0; j < numberArr.length; j += 1) { // если цифры
+        if (el === numberArr[j][1]) {
+          newText += `${numberArr[j][0]}`;
+        }
+      }
     }
 
-    this.textArea.value += `\n- - - - - Результат - - - - -\n${newText}`;
+    this.textArea.value = newText;
   }
 }
