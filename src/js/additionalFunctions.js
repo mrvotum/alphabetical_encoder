@@ -12,10 +12,19 @@ export default class AdditionalFunctions {
   }
 
   cleanForm() { // Очистить
-    this.textArea.disabled = false;
-    this.textArea.value = '';
+    const deleteFormEl = document.createElement('div');
+    deleteFormEl.classList = 'infoWindow red delete';
 
-    this.createInfoForm('Форма очищена!', 'red');
+    deleteFormEl.innerHTML = `
+      <span class="text">Уверены, что хотите очистить поле?</span>
+      <div class="span_btns_holder">
+        <span data-id="deleteTrue" class="span_btn">Да</span>
+        <span data-id="deleteFalse" class="span_btn">Нет</span>
+      </div>`;
+
+    this.parent.appendChild(deleteFormEl);
+
+    this.deleteFormBtns(deleteFormEl);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -38,14 +47,33 @@ export default class AdditionalFunctions {
 
   // eslint-disable-next-line class-methods-use-this
   createInfoForm(textInfo, bgc) {
-    const chatEl = document.createElement('div');
-    chatEl.classList = `infoWindow infoWindow-animate ${bgc}`;
+    const infoEl = document.createElement('div');
+    infoEl.classList = `infoWindow infoWindow-animate ${bgc}`;
 
-    chatEl.innerHTML = `<span class="text">${textInfo}</span>`;
+    infoEl.innerHTML = `<span class="text">${textInfo}</span>`;
 
-    this.parent.appendChild(chatEl);
+    this.parent.appendChild(infoEl);
 
-    // chatEl.style.marginTop = `${-chatEl.offsetHeight}px`;
-    // chatEl.style.marginLeft = `calc(50% - ${chatEl.offsetWidth}px)`;
+    setTimeout(() => {
+      infoEl.remove();
+    }, 2000);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  deleteFormBtns(formParent) {
+    const deleteTrue = document.querySelector('[data-id=deleteTrue]');
+    const deleteFalse = document.querySelector('[data-id=deleteFalse]');
+
+    deleteTrue.addEventListener('click', () => {
+      this.textArea.disabled = false;
+      this.textArea.value = '';
+
+      formParent.remove();
+      this.createInfoForm('Форма очищена!', 'red');
+    });
+
+    deleteFalse.addEventListener('click', () => {
+      formParent.remove();
+    });
   }
 }
