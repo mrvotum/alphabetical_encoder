@@ -75,7 +75,6 @@ export default class Translate {
       }
     }
 
-    console.log(newText);
     this.textArea.value += `\n- - - - - Результат - - - - -\n${newText}`;
   }
 }
