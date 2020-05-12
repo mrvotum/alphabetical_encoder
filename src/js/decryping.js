@@ -12,7 +12,7 @@ export default class Decryping {
   translation() {
     let newText = '';
     let textArr = this.textArea.value.toLowerCase();
-    textArr = textArr.split(/(_!-_)|(_\|_)|(_><\|}}_)|(_{\|_)|(_\|\|\|\|\|\|_)|(_-\|\|_)|(_-\|\|_)|(_!-_)|(_\.\|\._)|(_-\|_)/);
+    textArr = textArr.split(/(_!-_)|(_\|_)|(_><\|}}_)|(_{\|_)|(_\|\|\|\|\|\|_)|(_-\|\|_)|(_-\|\|_)|(_!-_)|(_\.\|\._)|(_-\|_)|(\|{>->})/);
 
     // console.log(textArr);
 
@@ -37,6 +37,8 @@ export default class Decryping {
       }
     }
 
+    // this.textArea
     this.textArea.value = newText;
+    this.textArea.disabled = false;
   }
 }

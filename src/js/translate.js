@@ -1,12 +1,12 @@
 import { letters, symbolArr, numberArr } from './dataBase';
+import AdditionalFunctions from './additionalFunctions';
 import Decryping from './decryping';
 
 export default class Translate {
-  constructor() {
-    this.translateToBtn = document.querySelector('[data-id=translateToBtn]');
-    this.translateFromBtn = document.querySelector('[data-id=translateFromBtn]');
+  constructor(parent) {
+    this.parent = document.querySelector(`[data-id=${parent}]`);
+    this.translateBtn = document.querySelector('[data-id=translate]');
     this.cleanFormBtn = document.querySelector('[data-id=cleanForm]');
-    this.copyTextBtn = document.querySelector('[data-id=copyText]');
     this.textArea = null;
   }
 
@@ -17,88 +17,55 @@ export default class Translate {
   }
 
   createListeners() {
-    this.translateToBtn.addEventListener('click', () => { // Зашифровать
+    this.translateBtn.addEventListener('click', () => {
       this.textArea = document.querySelector('[data-id=textField]');
-      if (this.textArea.value === '') {
-        console.error('пусто');
-      } else {
-        console.log('Окей, шифруем');
-        this.translation();
-      }
-    });
+      const checking = this.textArea.value.split('|{>->}');
 
-    this.translateFromBtn.addEventListener('click', () => { // Расшифровать
-      this.textArea = document.querySelector('[data-id=textField]');
-      if (this.textArea.value === '') {
-        console.error('пусто');
-      } else {
+      if (checking.length > 1) {
         console.log('Окей, будем расшифровывать');
         new Decryping(this.textArea).create();
+      } else if (this.textArea.value.length !== 0) {
+        console.log('Окей, шифруем');
+        this.translation();
+      } else {
+        new AdditionalFunctions(this.parent).createInfoForm('Форма пуста, введите текст', 'red');
       }
     });
 
     this.cleanFormBtn.addEventListener('click', () => { // Очистить
-      this.textArea = document.querySelector('[data-id=textField]');
-      this.textArea.value = '';
+      new AdditionalFunctions(this.parent).cleanForm();
     });
-
-    this.copyTextBtn.addEventListener('click', () => { // Копировать
-      /* Get the text field */
-      const copyText = document.querySelector('[data-id=textField]');
-
-      copyText.select();
-      document.execCommand('copy');
-
-      alert('Текст скопирован');
-    });
-
 
     console.log('Кнопки готовы к действию');
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  specialSimbol() {
-    const specialArr = [
-      ['_!-_'],
-      ['_|_'],
-      ['_><|}}_'],
-      ['_{|_'],
-      ['_||||||_'],
-      ['_-||_'],
-      ['_-|_'],
-      ['_!-_'],
-      ['_.|._'],
-    ];
-    const randomCount = Math.floor((9) * Math.random());
-
-    return specialArr[randomCount];
-  }
-
   translation() {
     const textArr = this.textArea.value.toLowerCase();
-    let newText = '';
+    let newText = '|{>->}'; // Это чтобы начало строки идентифицировать
 
     for (let i = 0; i < textArr.length; i += 1) {
       const el = textArr[i];
       for (let j = 0; j < letters.length; j += 1) {
         if (el === letters[j][1]) {
-          newText += `${letters[j][2]}${this.specialSimbol()}`;
+          newText += `${letters[j][2]}${new AdditionalFunctions(this.parent).specialSimbol()}`;
         }
       }
 
       for (let j = 0; j < symbolArr.length; j += 1) { // если знак препинания
         if (el === symbolArr[j][0]) {
-          newText += `${symbolArr[j][1]}${this.specialSimbol()}`;
+          newText += `${symbolArr[j][1]}${new AdditionalFunctions(this.parent).specialSimbol()}`;
         }
       }
 
       for (let j = 0; j < numberArr.length; j += 1) { // если цифры
         if (el === numberArr[j][0]) {
-          newText += `${numberArr[j][1]}${this.specialSimbol()}`;
+          newText += `${numberArr[j][1]}${new AdditionalFunctions(this.parent).specialSimbol()}`;
         }
       }
     }
 
     this.textArea.value = newText;
+    new AdditionalFunctions(this.parent).copyTextBtn();
+    this.textArea.disabled = true;
   }
 }
