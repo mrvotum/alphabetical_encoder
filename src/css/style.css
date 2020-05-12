@@ -6,7 +6,7 @@
 
 .wrapper {
   position: absolute;
-  width: 60%;
+  width: 70%;
   min-width: 100px;
   top: 50%;
   left: 50%;
@@ -92,6 +92,44 @@
 .span_btn:hover {
   cursor: pointer;
   background-color: rgb(77, 43, 43);
+}
+
+.hide {
+  opacity: 0;
+}
+
+.remove {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  top: calc(-50vh + 5px);
+  left: calc(100% - 23px);
+}
+.remove::before, .remove::after {
+  position: absolute;
+  content: '';
+  width: 16px;
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 8px;
+  left: 2px;
+  transition: .2s;
+}
+.remove::before {
+  transform: rotate(45deg);
+}
+.remove::after {
+  transform: rotate(-45deg);
+}
+.remove:hover {
+  cursor: pointer;
+}
+.remove:hover.remove::before,
+.remove:hover.remove::after {
+  width: 20px;
+  top: 9px;
+  left: 0px;
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 @media screen and (min-width: 320px) and (max-width: 960px){

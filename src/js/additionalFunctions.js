@@ -15,7 +15,7 @@ export default class AdditionalFunctions {
     this.textArea.value = fastCopy;
   }
 
-  cleanForm() { // Очистить
+  cleanForm(btn) { // Очистить
     const deleteFormEl = document.createElement('div');
     deleteFormEl.classList = 'infoWindow red delete';
 
@@ -28,7 +28,7 @@ export default class AdditionalFunctions {
 
     this.parent.appendChild(deleteFormEl);
 
-    this.deleteFormBtns(deleteFormEl);
+    this.deleteFormBtns(deleteFormEl, btn);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -64,7 +64,7 @@ export default class AdditionalFunctions {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  deleteFormBtns(formParent) {
+  deleteFormBtns(formParent, btn) {
     const deleteTrue = document.querySelector('[data-id=deleteTrue]');
     const deleteFalse = document.querySelector('[data-id=deleteFalse]');
 
@@ -74,6 +74,7 @@ export default class AdditionalFunctions {
 
       formParent.remove();
       this.createInfoForm('Форма очищена!', 'red');
+      btn.classList.add('hide');
     });
 
     deleteFalse.addEventListener('click', () => {

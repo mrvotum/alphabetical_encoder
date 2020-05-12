@@ -7,18 +7,15 @@ export default class Translate {
     this.parent = document.querySelector(`[data-id=${parent}]`);
     this.translateBtn = document.querySelector('[data-id=translate]');
     this.cleanFormBtn = document.querySelector('[data-id=cleanForm]');
-    this.textArea = null;
+    this.textArea = document.querySelector('[data-id=textField]');
   }
 
   create() {
-    console.log('Объявим слушателей');
-
     this.createListeners();
   }
 
   createListeners() {
     this.translateBtn.addEventListener('click', () => {
-      this.textArea = document.querySelector('[data-id=textField]');
       const checking = this.textArea.value.split('|{>->}');
 
       if (checking.length > 1) {
@@ -32,8 +29,16 @@ export default class Translate {
       }
     });
 
+    this.textArea.addEventListener('keydown', (event) => {
+      if (event.keyCode === 8 && this.textArea.value.length <= 1) {
+        this.cleanFormBtn.classList.add('hide');
+      } else {
+        this.cleanFormBtn.classList.remove('hide');
+      }
+    });
+
     this.cleanFormBtn.addEventListener('click', () => { // Очистить
-      new AdditionalFunctions(this.parent).cleanForm();
+      new AdditionalFunctions(this.parent).cleanForm(this.cleanFormBtn);
     });
 
     console.log('Кнопки готовы к действию');
