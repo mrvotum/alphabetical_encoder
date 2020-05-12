@@ -1,0 +1,38 @@
+import { letters, symbolArr } from './dataBase';
+
+export default class Decryping {
+  constructor(textArea) {
+    this.textArea = textArea;
+  }
+
+  create() {
+    this.translation();
+  }
+
+  translation() {
+    let newText = '';
+    let textArr = this.textArea.value.toLowerCase();
+    console.log();
+    textArr = textArr.split(/(_!-_)|(_\|_)|(_><\|}}_)|(_{\|_)|(_\|\|\|\|\|\|_)|(_-\|\|_)|(_-\|\|_)|(_!-_)|(_\.\|\._)|(_-\|_)/);
+
+    console.log(textArr);
+
+    for (let i = 0; i < textArr.length; i += 1) {
+      const el = textArr[i];
+      for (let j = 0; j < letters.length; j += 1) {
+        if (el === letters[j][2]) {
+          newText += `${letters[j][1]}`;
+        }
+      }
+
+      for (let j = 0; j < symbolArr.length; j += 1) { // если знак препинания
+        if (el === symbolArr[j][1]) {
+          newText += `${symbolArr[j][0]}`;
+        }
+      }
+    }
+
+    console.log(newText);
+    this.textArea.value += `\n- - - - - Результат - - - - -\n${newText}`;
+  }
+}
