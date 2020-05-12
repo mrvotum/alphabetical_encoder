@@ -16,19 +16,24 @@ export default class AdditionalFunctions {
   }
 
   cleanForm(btn) { // Очистить
-    const deleteFormEl = document.createElement('div');
-    deleteFormEl.classList = 'infoWindow red delete';
+    this.textArea.disabled = false;
+    this.textArea.value = '';
 
-    deleteFormEl.innerHTML = `
-      <span class="text">Уверены, что хотите очистить поле?</span>
-      <div class="span_btns_holder">
-        <span data-id="deleteTrue" class="span_btn">Да</span>
-        <span data-id="deleteFalse" class="span_btn">Нет</span>
-      </div>`;
+    this.createInfoForm('Форма очищена!', 'red');
+    btn.classList.add('hide');
+    // const deleteFormEl = document.createElement('div');
+    // deleteFormEl.classList = 'infoWindow red delete';
 
-    this.parent.appendChild(deleteFormEl);
+    // deleteFormEl.innerHTML = `
+    //   <span class="text">Уверены, что хотите очистить поле?</span>
+    //   <div class="span_btns_holder">
+    //     <span data-id="deleteTrue" class="span_btn">Да</span>
+    //     <span data-id="deleteFalse" class="span_btn">Нет</span>
+    //   </div>`;
 
-    this.deleteFormBtns(deleteFormEl, btn);
+    // this.parent.appendChild(deleteFormEl);
+
+    // this.deleteFormBtns(deleteFormEl, btn);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -64,21 +69,21 @@ export default class AdditionalFunctions {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  deleteFormBtns(formParent, btn) {
-    const deleteTrue = document.querySelector('[data-id=deleteTrue]');
-    const deleteFalse = document.querySelector('[data-id=deleteFalse]');
+  // deleteFormBtns(formParent, btn) {
+  //   const deleteTrue = document.querySelector('[data-id=deleteTrue]');
+  //   const deleteFalse = document.querySelector('[data-id=deleteFalse]');
 
-    deleteTrue.addEventListener('click', () => {
-      this.textArea.disabled = false;
-      this.textArea.value = '';
+  //   deleteTrue.addEventListener('click', () => {
+  //     this.textArea.disabled = false;
+  //     this.textArea.value = '';
 
-      formParent.remove();
-      this.createInfoForm('Форма очищена!', 'red');
-      btn.classList.add('hide');
-    });
+  //     formParent.remove();
+  //     this.createInfoForm('Форма очищена!', 'red');
+  //     btn.classList.add('hide');
+  //   });
 
-    deleteFalse.addEventListener('click', () => {
-      formParent.remove();
-    });
-  }
+  //   deleteFalse.addEventListener('click', () => {
+  //     formParent.remove();
+  //   });
+  // }
 }
