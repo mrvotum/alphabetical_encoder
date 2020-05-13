@@ -27,6 +27,7 @@ body {
   padding: 20px;
   font-size: 18px;
   outline: none;
+  resize: none;
 }
 
 .btnHolder {
